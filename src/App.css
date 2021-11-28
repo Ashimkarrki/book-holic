@@ -1,38 +1,74 @@
-.App {
-  text-align: center;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.nav {
+  /* background: green; */
+  /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+  color: rgb(128, 69, 69);
+  font-family: "Comforter Brush", cursive;
+  font-size: 2em;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.sidebar h4 {
+  cursor: pointer;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.sidebar {
+  /* background-color: rgb(192, 165, 76); */
+  height: 100vh;
+  position: fixed;
+  width: 10em;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: spa; */
+  /* justify-content: space-around; */
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  /* align-items: ; */
+  align-items: center;
+  gap: 1em;
+  background: rgb(34, 193, 195);
+  background: linear-gradient(
+    0deg,
+    rgba(34, 193, 195, 1) 0%,
+    rgba(253, 187, 45, 1) 100%
+  );
+  top: 0;
+}
+.sidebar button {
+  /* padding: 01em; */
+  width: 50%;
+  border: none;
+  background-color: inherit;
+  border-bottom: rgb(128, 69, 69) solid 0;
+}
+.sidebar button:hover {
+  border-bottom: rgb(128, 69, 69) solid 1px;
+}
+.sidebar button h4 {
+  padding: 0.2em;
 }
 
-.App-link {
-  color: #61dafb;
+.app {
+  position: relative;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.home form h4 {
+  margin-top: 0.5em;
+}
+.home form {
+  margin-top: 4em;
+  text-align: center;
+}
+.home form h4 {
+  font-weight: 200;
+}
+.booklist {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
 }
