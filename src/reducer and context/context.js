@@ -8,12 +8,18 @@ const initialState = {
   bookName: "",
   searchBookInfo: {},
   searchLoading: true,
+  openSidebar: false,
 };
 const AppProvider = ({ children }) => {
+  // const ref = useRef(initialValue)
   const [state, dispatch] = useReducer(reducer, initialState);
+  // const [firstRender, setFirstRender] = useState()
   const firstRender = React.useRef(true);
   const setBookName = (x) => {
     dispatch({ type: "SET-BOOK-NAME", payload: x });
+  };
+  const toggleSidebar = () => {
+    dispatch({ type: "TOGGLE-SIDEBAR" });
   };
   const fetchBookById = async () => {
     const response = await fetch(
@@ -21,6 +27,7 @@ const AppProvider = ({ children }) => {
     );
     const convert = await response.json();
     dispatch({ type: "INSTALL-SEARCH-BOOKS", payload: convert });
+    // console.log(convert);
   };
   useEffect(() => {
     if (firstRender.current) {
@@ -30,7 +37,7 @@ const AppProvider = ({ children }) => {
     fetchBookById();
   }, [state.bookName]);
   return (
-    <AppContext.Provider value={{ ...state, setBookName }}>
+    <AppContext.Provider value={{ ...state, toggleSidebar, setBookName }}>
       {children}
     </AppContext.Provider>
   );

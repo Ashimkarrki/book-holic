@@ -2,7 +2,7 @@ import React from "react";
 import { useGlobalContext } from "../reducer and context/context";
 import BookList from "../component/BookList";
 const Home = () => {
-  const { setBookName } = useGlobalContext();
+  const { setBookName, bookName } = useGlobalContext();
   const [name, setName] = React.useState("");
   return (
     <div className="home">
@@ -14,6 +14,7 @@ const Home = () => {
       >
         <input
           type="text"
+          value={name}
           onChange={(e) => {
             setName(e.target.value);
           }}
