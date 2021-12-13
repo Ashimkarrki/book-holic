@@ -104,3 +104,11 @@
 .onebook h4 {
   font-weight: 200;
 }
+.reviewsection {
+  display: flex;
+  align-items: flex-start;
+  /* justify-content: center; */
+  flex-direction: column;
+  /* width: 60vh; */
+  margin-bottom: 4em;
+}

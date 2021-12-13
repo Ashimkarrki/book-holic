@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { useGlobalContext } from "../reducer and context/context";
-const OneBook = () => {
+const OneBook2 = () => {
   // console.log("daata fetch vayo");
   const {
     bookName,
@@ -11,6 +11,12 @@ const OneBook = () => {
     addRating,
     addBookStatus,
   } = useGlobalContext();
+  const navigate = useNavigate();
+  const { isbn } = useParams();
+
+  const [loading, setLoading] = React.useState(true);
+  const [biggerData, setBiggerData] = React.useState({});
+  const { searchBookInfo, searchLoading, pushToFirebase } = useGlobalContext();
 
   const { id, bookname } = useParams();
   const options = {
@@ -36,30 +42,32 @@ const OneBook = () => {
     return { bo: false };
   };
 
-  const [loading, setLoading] = React.useState(true);
-  const [biggerData, setBiggerData] = React.useState({});
-  const { searchBookInfo, searchLoading, pushToFirebase } = useGlobalContext();
-  var smallData = React.useRef();
-  var url = React.useRef();
-  smallData.current = searchBookInfo.books?.filter((s) => {
-    return s.id === id;
-  });
-  url.current = smallData.current?.map((s) => {
-    return s.selfLink;
-  })[0];
   const fetchOne = async () => {
-    console.log("vitra xa");
-    const response = await fetch(url.current);
+    const response = await fetch(
+      `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=AIzaSyBGiwbvE0SI4x9H2X2DJMGL2sjQMn4M9NU`
+    );
 
-    console.log(typeof response);
     const convert = await response.json();
-    setBiggerData({
-      ...smallData.current[0],
-      totalPage: convert.volumeInfo.pageCount,
-      rating: convert.volumeInfo.averageRating,
+    const s = convert.items[0];
 
-      language: convert.volumeInfo.language,
-      publisher: convert.volumeInfo.publisher,
+    if (!s.volumeInfo.imageLinks) {
+      var img =
+        "https://img.whaleshares.io/wls-img/einstei1/d765e65f432e7e6f0d062616d19364ecdc5631da.png";
+    } else {
+      img = s.volumeInfo.imageLinks.thumbnail;
+    }
+    setBiggerData({
+      id: s.id,
+      title: s.volumeInfo.title,
+      author: s.volumeInfo.authors,
+      published: s.volumeInfo.publishedDate,
+      img,
+      totalPage: s.volumeInfo.pageCount,
+      rating: s.volumeInfo.averageRating,
+
+      language: s.volumeInfo.language,
+      publisher: s.volumeInfo.publisher,
+      // isbn: convert.industryIdentifiers.
     });
 
     setLoading(false);
@@ -67,11 +75,9 @@ const OneBook = () => {
 
   useEffect(() => {
     setLoading(true);
-    setBookName(bookname);
     fetchOne();
-    console.log("effect");
-  }, [url.current]);
-  if (loading || searchLoading) {
+  }, []);
+  if (loading) {
     return <h1>Loading</h1>;
   }
 
@@ -83,6 +89,8 @@ const OneBook = () => {
         Description: <p>{biggerData.desc}</p>{" "}
       </h3>
       <h4> Total page:{biggerData.totalPage}</h4>
+      {/* {biggerData.id && console.log(biggerData)} */}
+      {/* {console.log(biggerData.id : "happy")} */}
       <h4> Rating:{biggerData?.rating}</h4>
       <h4>Language:{biggerData.language}</h4>
       <h4>Publisher:{biggerData.publisher}</h4>
@@ -198,4 +206,4 @@ const OneBook = () => {
     </div>
   );
 };
-export default OneBook;
+export default OneBook2;

@@ -8,6 +8,10 @@ const reducer = (state, action) => {
       return { ...state, openSidebar: !state.openSidebar };
 
       break;
+    case "SET-CURRENT-USER":
+      return { ...state, currentUser: action.payload };
+      break;
+
     case "INSTALL-SEARCH-BOOKS":
       const temp2 = action.payload.items;
       const temp = temp2.length;
