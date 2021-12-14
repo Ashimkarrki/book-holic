@@ -38,6 +38,7 @@ const AppProvider = ({ children }) => {
   });
   const [state, dispatch] = useReducer(reducer, initialState);
   const firstRender = React.useRef(true);
+
   const addToLibrary = (x) => {
     const colRef = collection(db, "user");
 
@@ -61,6 +62,7 @@ const AppProvider = ({ children }) => {
       library: [...userInfo.library, x],
     });
   };
+
   const addRating = (bookId, rating) => {
     const colRef = collection(db, "user");
     const temp = userInfo.rated.filter((s) => {
@@ -100,8 +102,6 @@ const AppProvider = ({ children }) => {
   };
   const addBookStatus = (bookId, status) => {
     const colRef = collection(db, "user");
-    // if(userInfo)
-    // set
 
     const temp = userInfo.bookStatus.filter((s) => {
       return s.bookId != bookId;
@@ -166,6 +166,19 @@ const AppProvider = ({ children }) => {
     });
     return signOut(auth);
   };
+  const addComment = (bookId, comment) => {
+    const colRef = collection(db, "users");
+    return setDoc(doc(colRef, user.uid), {
+      ...userInfo,
+      review: [
+        ...userInfo.review,
+        {
+          bookId,
+          comment,
+        },
+      ],
+    });
+  };
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -206,6 +219,7 @@ const AppProvider = ({ children }) => {
         addBookStatus,
         addRating,
         userInfo,
+        addComment,
         // pushToFirebase,
       }}
     >

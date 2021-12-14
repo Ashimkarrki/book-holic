@@ -10,9 +10,11 @@ const OneBook = () => {
     userInfo,
     addRating,
     addBookStatus,
+    addComment,
   } = useGlobalContext();
 
   const { id, bookname } = useParams();
+  const [comment, setComment] = React.useState("");
   const options = {
     rating: ["none", 1, 2, 3, 4, 5],
     status: ["none", "read", "currently reading", "want to read"],
@@ -192,8 +194,20 @@ const OneBook = () => {
       </select>
       <div className="reviewsection">
         <h2>Review</h2>
-        <textarea rows="4" cols="50" />
-        <button>Submit</button>
+        <form
+          onSubmit={() => {
+            addComment(biggerData.id, comment);
+            setComment("");
+          }}
+        >
+          <textarea
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
+            rows="4"
+            cols="50"
+          />
+          <button type="submit">Submit</button>
+        </form>
       </div>
     </div>
   );
