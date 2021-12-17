@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
+import CommentSection from "../component/CommentSection";
 import { useGlobalContext } from "../reducer and context/context";
 const OneBook = () => {
   // console.log("daata fetch vayo");
@@ -122,7 +123,7 @@ const OneBook = () => {
           <>
             {options.status.map((s, index) => {
               const where = isPresent("bookStatus").position;
-              console.log(where);
+              // console.log(where);
               if (s === userInfo.bookStatus[where].status)
                 return (
                   <option key={index} selected value={s}>
@@ -192,12 +193,18 @@ const OneBook = () => {
           </>
         )}
       </select>
+      <CommentSection id={biggerData.id} />
       <div className="reviewsection">
         <h2>Review</h2>
         <form
-          onSubmit={() => {
-            addComment(biggerData.id, comment);
-            setComment("");
+          onSubmit={(e) => {
+            e.preventDefault();
+            console.log(comment);
+            addComment(biggerData.id, comment)
+              .then(() => console.log("added"))
+              .finally(() => {
+                setComment("");
+              });
           }}
         >
           <textarea

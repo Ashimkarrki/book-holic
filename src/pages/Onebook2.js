@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { useGlobalContext } from "../reducer and context/context";
+import CommentSection from "../component/CommentSection";
 const OneBook2 = () => {
+  const [comment, setComment] = React.useState("");
+
   // console.log("daata fetch vayo");
   const {
     bookName,
@@ -10,6 +13,7 @@ const OneBook2 = () => {
     userInfo,
     addRating,
     addBookStatus,
+    addComment,
   } = useGlobalContext();
   const navigate = useNavigate();
   const { isbn } = useParams();
@@ -198,10 +202,28 @@ const OneBook2 = () => {
           </>
         )}
       </select>
+      <CommentSection id={biggerData.id} />
       <div className="reviewsection">
         <h2>Review</h2>
-        <textarea rows="4" cols="50" />
-        <button>Submit</button>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            console.log(comment);
+            addComment(biggerData.id, comment)
+              .then(() => console.log("added"))
+              .finally(() => {
+                setComment("");
+              });
+          }}
+        >
+          <textarea
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
+            rows="4"
+            cols="50"
+          />
+          <button type="submit">Submit</button>
+        </form>
       </div>
     </div>
   );

@@ -1,12 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { initializeFirestore, collection } from "@firebase/firestore";
+import {
+  initializeFirestore,
+  collection,
+  getDoc,
+  doc,
+  getFirestore,
+} from "@firebase/firestore";
 const CommentSection = ({ id }) => {
-  const db = initializeFirestore();
-  const colRef = collection(db, "users");
-  
-
-  useEffect(() => {}, []);
-  return <div></div>;
+  const [data, setData] = useState([]);
+  const db = getFirestore();
+  const colRef = collection(db, "comments");
+  const fetch = async () => {
+    const document = await getDoc(doc(colRef, id));
+    if (document.exists()) {
+      setData(document.data().commentField);
+    }
+  };
+  useEffect(() => {
+    if (id) {
+      fetch(id);
+    }
+  }, [id]);
+  return (
+    <div>
+      {console.log(data)}
+      {data.map((s) => {
+        const { userName, comment } = s;
+        return (
+          <div className="sub">
+            <h3>{comment}</h3>
+            <h4>{userName}</h4>
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 export default CommentSection;

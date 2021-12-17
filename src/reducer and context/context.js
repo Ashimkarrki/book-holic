@@ -12,6 +12,9 @@ import {
   doc,
   setDoc,
   getDoc,
+  arrayUnion,
+  updateDoc,
+  getDocs,
 } from "firebase/firestore";
 
 import reducer from "./reducer";
@@ -34,6 +37,7 @@ const AppProvider = ({ children }) => {
     library: [],
     bookStatus: [],
     rated: [],
+    // comment: [],
     review: [],
   });
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -161,22 +165,34 @@ const AppProvider = ({ children }) => {
       userName: "",
       library: [],
       bookStatus: [],
+      // comment: [],
       rated: [],
       review: null,
     });
     return signOut(auth);
   };
-  const addComment = (bookId, comment) => {
-    const colRef = collection(db, "users");
-    return setDoc(doc(colRef, user.uid), {
+  const addComment = async (bookId, comment) => {
+    const colRef1 = collection(db, "comments");
+    const colRef2 = collection(db, "user");
+    const docRef = doc(colRef1, bookId);
+    setUserInfo({
       ...userInfo,
-      review: [
-        ...userInfo.review,
-        {
-          bookId,
-          comment,
-        },
-      ],
+      review: [...userInfo.review, { bookId, comment }],
+    });
+    const docu = await getDoc(docRef);
+    if (docu.exists()) {
+      updateDoc(doc(colRef1, bookId), {
+        commentField: arrayUnion({ userName: userInfo.userName, comment }),
+      });
+    } else {
+      setDoc(doc(colRef1, bookId), {
+        commentField: [{ userName: userInfo.userName, comment }],
+      });
+    }
+
+    return setDoc(doc(colRef2, user.uid), {
+      ...userInfo,
+      review: [...userInfo.review, { bookId, comment }],
     });
   };
   useEffect(() => {
