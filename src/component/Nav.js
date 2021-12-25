@@ -1,22 +1,44 @@
 import React from "react";
 import { useGlobalContext } from "../reducer and context/context";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const Nav = () => {
-  const { openSidebar, toggleSidebar } = useGlobalContext();
-
+  const { openSidebar, toggleSidebar, user } = useGlobalContext();
+  const x = useLocation();
+  // console.log(x);
   return (
     <div className="nav">
-      <Link to="/">Book-holic</Link>
-      <button onClick={toggleSidebar}>menu</button>
-      <Link to="/login">
-        <button>Login</button>
+      <Link className="book-holic" to="/">
+        Book-holic
       </Link>
-      <Link to="/signin">
-        <button>signin</button>
-      </Link>
-      <Link to="/logout">
-        <button>log out</button>
-      </Link>
+      <div className="left">
+        {user && (
+          <button className="jhur" onClick={toggleSidebar}>
+            menu
+          </button>
+        )}
+        {!user && (
+          <button>
+            <Link className="jhur" to="/login">
+              Login
+            </Link>
+          </button>
+        )}
+
+        {!user && (
+          <button>
+            <Link className="jhur" to="/signin">
+              signin
+            </Link>
+          </button>
+        )}
+        <button>
+          {user && (
+            <Link className="jhur" to="/logout">
+              log out
+            </Link>
+          )}
+        </button>
+      </div>
     </div>
   );
 };

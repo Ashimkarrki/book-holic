@@ -3,8 +3,10 @@ import { useGlobalContext } from "../reducer and context/context";
 import { Link } from "react-router-dom";
 const LibraryList = ({ library, whatIsInThere, reqData }) => {
   const [data, setData] = useState([]);
+  var temp1 = reqData;
   const doFilter = (id) => {
     var needed;
+    var some;
     if (whatIsInThere === "BookStatus") {
       const temp = reqData.map((s) => {
         if (s.bookId === id) {
@@ -20,7 +22,7 @@ const LibraryList = ({ library, whatIsInThere, reqData }) => {
         return;
       });
     }
-
+    // console.log(reqData[0]);
     return needed;
   };
   const fetchById = async (ids) => {
@@ -58,7 +60,6 @@ const LibraryList = ({ library, whatIsInThere, reqData }) => {
         img: img,
       };
     });
-    console.log(newHai);
     setData(newHai);
   };
   useEffect(() => {
@@ -67,9 +68,9 @@ const LibraryList = ({ library, whatIsInThere, reqData }) => {
   return (
     <div className="booklist">
       <div className="map">
-        {data.map((s) => {
+        {data.map((s, index) => {
           return (
-            <Link key={s.id} to={`/onebook2/${s.isbn}`}>
+            <Link key={index} to={`/onebook2/${s.isbn}`}>
               <div className="individual">
                 <img src={s.img} />
                 <div className="something">

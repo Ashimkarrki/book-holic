@@ -28,8 +28,8 @@ const CommentSection = ({ id }) => {
         const { userName, comment } = s;
         return (
           <div className="sub">
-            <h3>{comment}</h3>
-            <h4>{userName}</h4>
+            <h2>{comment}</h2>
+            <h4>-by {userName}</h4>
           </div>
         );
       })}

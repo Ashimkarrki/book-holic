@@ -1,9 +1,11 @@
 import React from "react";
 import { useGlobalContext } from "../reducer and context/context";
 import BookList from "../component/BookList";
+import Loading from "../component/Loading";
 const Home = () => {
-  const { setBookName, bookName } = useGlobalContext();
+  const { setBookName, bookName, searchLoading } = useGlobalContext();
   const [name, setName] = React.useState("");
+  // if
   return (
     <div className="home">
       <form
@@ -14,6 +16,8 @@ const Home = () => {
       >
         <input
           type="text"
+          required
+          placeholder="Search By Book Title"
           value={name}
           onChange={(e) => {
             setName(e.target.value);
@@ -24,7 +28,6 @@ const Home = () => {
           <button type="submit">Search</button>
         </h4>
       </form>
-
       <BookList />
     </div>
   );

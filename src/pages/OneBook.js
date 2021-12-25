@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import CommentSection from "../component/CommentSection";
+import Loading from "../component/Loading";
 import { useGlobalContext } from "../reducer and context/context";
 const OneBook = () => {
   // console.log("daata fetch vayo");
   const {
+    user,
     bookName,
     setBookName,
     addToLibrary,
@@ -75,146 +77,188 @@ const OneBook = () => {
     console.log("effect");
   }, [url.current]);
   if (loading || searchLoading) {
-    return <h1>Loading</h1>;
+    return (
+      <div className="loadingKoMathi">
+        <Loading />
+      </div>
+    );
   }
 
   return (
-    <div className="onebook">
-      <img src={biggerData?.img} />
-      <h3>{biggerData.title}!</h3>
-      <h3>
-        Description: <p>{biggerData.desc}</p>{" "}
-      </h3>
-      <h4> Total page:{biggerData.totalPage}</h4>
-      <h4> Rating:{biggerData?.rating}</h4>
-      <h4>Language:{biggerData.language}</h4>
-      <h4>Publisher:{biggerData.publisher}</h4>
-      <h4>Author:{biggerData.author}</h4>
-      <h4>Published Date:{biggerData.published}</h4>
-      <select
-        name="status"
-        onClick={(e) => {
-          addBookStatus(biggerData.id, e.target.value).then((response) =>
-            console.log("added hai")
-          );
-        }}
-      >
-        {(!userInfo.bookStatus || !isPresent("bookStatus").bo) && (
-          <>
-            {console.log("before")}
+    <div className="up">
+      <div className="onebook">
+        <div className="pictureRwname">
+          <img src={biggerData?.img} />
+          <h3>{biggerData.title}!</h3>
+        </div>
+        <div className="subOnebook">
+          <h3>SYPNOSIS: </h3>
 
-            {options.status.map((s, index) => {
-              if (s === "none") {
-                return (
-                  <option key={index} selected value={s}>
-                    select one
-                  </option>
-                );
-              }
-              return (
-                <option key={index} value={s}>
-                  {s}
-                </option>
-              );
-            })}
-          </>
-        )}
-        {userInfo.bookStatus && isPresent("bookStatus").bo && (
-          <>
-            {options.status.map((s, index) => {
-              const where = isPresent("bookStatus").position;
-              // console.log(where);
-              if (s === userInfo.bookStatus[where].status)
-                return (
-                  <option key={index} selected value={s}>
-                    {s}
-                  </option>
-                );
+          <h4>
+            <p>{biggerData.desc}</p>
+          </h4>
+        </div>
+      </div>
 
-              return (
-                <option key={index} value={s}>
-                  {s}
-                </option>
-              );
-            })}
-          </>
-        )}
-      </select>
-      <button
-        onClick={() => {
-          addToLibrary(biggerData.id)
-            .catch((err) => console.log(err))
-            .finally(console.log("Library data updated"));
-        }}
-      >
-        Add to library +
-      </button>
-      <select
-        name="rating"
-        onClick={(e) => {
-          addRating(biggerData.id, e.target.value);
-        }}
-      >
-        {(!userInfo.rated || !isPresent("rated").bo) && (
-          <>
-            {options.rating.map((s, index) => {
-              if (s === "none") {
-                return (
-                  <option key={index} selected value={s}>
-                    select one
-                  </option>
-                );
-              }
-              return (
-                <option key={index} value={s}>
-                  {s}
-                </option>
-              );
-            })}
-          </>
-        )}
-        {userInfo.rated && isPresent("rated").bo && (
-          <>
-            {options.rating.map((s, index) => {
-              const where = isPresent("rated").position;
-              if (s == userInfo.rated[where].rating)
-                return (
-                  <option key={index} selected value={s}>
-                    {s}
-                  </option>
-                );
+      <div className="extra">
+        <h4>
+          Total page:
+          <span>{biggerData.totalPage}</span>
+        </h4>
 
-              return (
-                <option key={index} value={s}>
-                  {s}
-                </option>
-              );
-            })}
+        <h4>
+          Rating:
+          <span>{biggerData?.rating}</span>
+        </h4>
+        <h4>
+          Language:
+          <span>{biggerData.language}</span>
+        </h4>
+        <h4>
+          Publisher:
+          <span>{biggerData.publisher}</span>
+        </h4>
+
+        <h4>
+          Author:
+          <span>{biggerData.author}</span>
+        </h4>
+
+        <h4>
+          Published Date:
+          <span>{biggerData.published}</span>
+        </h4>
+        {user && (
+          <>
+            <select
+              name="status"
+              onClick={(e) => {
+                addBookStatus(biggerData.id, e.target.value).then((response) =>
+                  console.log("added hai")
+                );
+              }}
+            >
+              {(!userInfo.bookStatus || !isPresent("bookStatus").bo) && (
+                <>
+                  {console.log("before")}
+
+                  {options.status.map((s, index) => {
+                    if (s === "none") {
+                      return (
+                        <option key={index} selected value={s}>
+                          select one
+                        </option>
+                      );
+                    }
+                    return (
+                      <option key={index} value={s}>
+                        {s}
+                      </option>
+                    );
+                  })}
+                </>
+              )}
+              {userInfo.bookStatus && isPresent("bookStatus").bo && (
+                <>
+                  {options.status.map((s, index) => {
+                    const where = isPresent("bookStatus").position;
+                    // console.log(where);
+                    if (s === userInfo.bookStatus[where].status)
+                      return (
+                        <option key={index} selected value={s}>
+                          {s}
+                        </option>
+                      );
+
+                    return (
+                      <option key={index} value={s}>
+                        {s}
+                      </option>
+                    );
+                  })}
+                </>
+              )}
+            </select>
+            <button
+              onClick={() => {
+                addToLibrary(biggerData.id)
+                  .catch((err) => console.log(err))
+                  .finally(console.log("Library data updated"));
+              }}
+            >
+              Add to library +
+            </button>
+            <select
+              name="rating"
+              onClick={(e) => {
+                addRating(biggerData.id, e.target.value);
+              }}
+            >
+              {(!userInfo.rated || !isPresent("rated").bo) && (
+                <>
+                  {options.rating.map((s, index) => {
+                    if (s === "none") {
+                      return (
+                        <option key={index} selected value={s}>
+                          select one
+                        </option>
+                      );
+                    }
+                    return (
+                      <option key={index} value={s}>
+                        {s}
+                      </option>
+                    );
+                  })}
+                </>
+              )}
+              {userInfo.rated && isPresent("rated").bo && (
+                <>
+                  {options.rating.map((s, index) => {
+                    const where = isPresent("rated").position;
+                    if (s == userInfo.rated[where].rating)
+                      return (
+                        <option key={index} selected value={s}>
+                          {s}
+                        </option>
+                      );
+
+                    return (
+                      <option key={index} value={s}>
+                        {s}
+                      </option>
+                    );
+                  })}
+                </>
+              )}
+            </select>
           </>
         )}
-      </select>
-      <CommentSection id={biggerData.id} />
-      <div className="reviewsection">
-        <h2>Review</h2>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            console.log(comment);
-            addComment(biggerData.id, comment)
-              .then(() => console.log("added"))
-              .finally(() => {
-                setComment("");
-              });
-          }}
-        >
-          <textarea
-            onChange={(e) => setComment(e.target.value)}
-            value={comment}
-            rows="4"
-            cols="50"
-          />
-          <button type="submit">Submit</button>
-        </form>
+        <CommentSection id={biggerData.id} />
+        {user && (
+          <div className="reviewsection">
+            <h2>Review</h2>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log(comment);
+                addComment(biggerData.id, comment)
+                  .then(() => console.log("added"))
+                  .finally(() => {
+                    setComment("");
+                  });
+              }}
+            >
+              <textarea
+                onChange={(e) => setComment(e.target.value)}
+                value={comment}
+                rows="4"
+                cols="50"
+              />
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        )}
       </div>
     </div>
   );

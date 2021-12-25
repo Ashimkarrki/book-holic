@@ -6,7 +6,7 @@ const BookList = () => {
   const { searchLoading } = useGlobalContext();
   const { searchBookInfo, bookName } = useGlobalContext();
   if (searchLoading) {
-    return <div className="booklist">nothing</div>;
+    return <div className="booklist"></div>;
   } else {
     return (
       <div className="booklist">

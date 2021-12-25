@@ -30,7 +30,7 @@ const initialState = {
 };
 const AppProvider = ({ children }) => {
   const db = getFirestore();
-
+  const [userLoading, setUserLoading] = React.useState(true);
   const [user, setUser] = React.useState();
   const [userInfo, setUserInfo] = React.useState({
     userName: "",
@@ -167,37 +167,46 @@ const AppProvider = ({ children }) => {
       bookStatus: [],
       // comment: [],
       rated: [],
-      review: null,
+      review: [],
     });
     return signOut(auth);
   };
-  const addComment = async (bookId, comment) => {
+  const addComment = async (bookId, hya) => {
     const colRef1 = collection(db, "comments");
     const colRef2 = collection(db, "user");
     const docRef = doc(colRef1, bookId);
+    const ok = userInfo.review.map((s) => {
+      if (s.bookId === bookId) {
+        return { ...s, comment: [...s.comment, hya] };
+      }
+      return { bookId: bookId, comment: [hya] };
+    });
     setUserInfo({
       ...userInfo,
-      review: [...userInfo.review, { bookId, comment }],
+      review: [...ok],
     });
     const docu = await getDoc(docRef);
     if (docu.exists()) {
       updateDoc(doc(colRef1, bookId), {
-        commentField: arrayUnion({ userName: userInfo.userName, comment }),
+        commentField: arrayUnion({ userName: userInfo.userName, comment: hya }),
       });
     } else {
       setDoc(doc(colRef1, bookId), {
-        commentField: [{ userName: userInfo.userName, comment }],
+        commentField: [{ userName: userInfo.userName, comment: hya }],
       });
     }
 
     return setDoc(doc(colRef2, user.uid), {
       ...userInfo,
-      review: [...userInfo.review, { bookId, comment }],
+      review: [...ok],
     });
   };
   useEffect(() => {
+    setUserLoading(true);
     const unSubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      setUserLoading(false);
+
       console.log(user);
       if (user) {
         const docRef = doc(db, "user", user.uid);
@@ -236,6 +245,7 @@ const AppProvider = ({ children }) => {
         addRating,
         userInfo,
         addComment,
+        userLoading,
         // pushToFirebase,
       }}
     >
