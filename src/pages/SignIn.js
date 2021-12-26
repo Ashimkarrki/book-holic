@@ -32,7 +32,6 @@ const SignIn = () => {
           e.preventDefault();
           createUser(data.email, data.password)
             .then((user) => {
-              console.log(user.user.uid);
               const colRef = collection(db, "user");
               setDoc(doc(colRef, user.user.uid), {
                 ...userInfo,
@@ -41,7 +40,6 @@ const SignIn = () => {
             })
             .catch((err) => {
               isInvalid = true;
-              console.log(err);
               toast.warn("invalid password or email", {
                 position: toast.POSITION.BOTTOM_LEFT,
                 theme: "dark",

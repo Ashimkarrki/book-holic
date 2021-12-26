@@ -22,14 +22,13 @@ const LibraryList = ({ library, whatIsInThere, reqData }) => {
         return;
       });
     }
-    // console.log(reqData[0]);
     return needed;
   };
   const fetchById = async (ids) => {
     const responses = await Promise.all(
       ids.map((s) => {
         return fetch(
-          `https://www.googleapis.com/books/v1/volumes/${s}?key=AIzaSyBGiwbvE0SI4x9H2X2DJMGL2sjQMn4M9NU`
+          `https://www.googleapis.com/books/v1/volumes/${s}?key=${process.env.REACT_APP_BOOK_API}`
         );
       })
     );
@@ -78,10 +77,10 @@ const LibraryList = ({ library, whatIsInThere, reqData }) => {
                   <h5>By {s.author}</h5>
                   <h6>{s.published}</h6>
                   {whatIsInThere === "rating" && (
-                    <h5>rated :{doFilter(s.id)}</h5>
+                    <h5>Rated : {doFilter(s.id)}</h5>
                   )}
                   {whatIsInThere === "BookStatus" && (
-                    <h5>status :{doFilter(s.id)}</h5>
+                    <h5>Status : {doFilter(s.id)}</h5>
                   )}
                 </div>
               </div>

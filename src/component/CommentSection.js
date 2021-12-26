@@ -23,7 +23,6 @@ const CommentSection = ({ id }) => {
   }, [id]);
   return (
     <div>
-      {console.log(data)}
       {data.map((s) => {
         const { userName, comment } = s;
         return (

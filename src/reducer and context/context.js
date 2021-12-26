@@ -19,7 +19,7 @@ import {
 
 import reducer from "./reducer";
 const url = "https://www.googleapis.com/books/v1/volumes?q=";
-const apiKey = "AIzaSyBGiwbvE0SI4x9H2X2DJMGL2sjQMn4M9NU";
+const apiKey = process.env.REACT_APP_BOOK_API;
 const AppContext = React.createContext();
 const initialState = {
   bookName: "",
@@ -207,7 +207,6 @@ const AppProvider = ({ children }) => {
       setUser(user);
       setUserLoading(false);
 
-      console.log(user);
       if (user) {
         const docRef = doc(db, "user", user.uid);
         getDoc(docRef).then((snapshot) => {

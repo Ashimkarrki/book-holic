@@ -4,7 +4,6 @@ import CommentSection from "../component/CommentSection";
 import Loading from "../component/Loading";
 import { useGlobalContext } from "../reducer and context/context";
 const OneBook = () => {
-  // console.log("daata fetch vayo");
   const {
     user,
     bookName,
@@ -53,10 +52,8 @@ const OneBook = () => {
     return s.selfLink;
   })[0];
   const fetchOne = async () => {
-    console.log("vitra xa");
     const response = await fetch(url.current);
 
-    console.log(typeof response);
     const convert = await response.json();
     setBiggerData({
       ...smallData.current[0],
@@ -74,7 +71,6 @@ const OneBook = () => {
     setLoading(true);
     setBookName(bookname);
     fetchOne();
-    console.log("effect");
   }, [url.current]);
   if (loading || searchLoading) {
     return (
@@ -102,46 +98,37 @@ const OneBook = () => {
 
       <div className="extra">
         <h4>
-          Total page:
-          <span>{biggerData.totalPage}</span>
+          Total page :<span> {biggerData.totalPage}</span>
         </h4>
 
         <h4>
-          Rating:
-          <span>{biggerData?.rating}</span>
+          Rating :<span> {biggerData?.rating}</span>
         </h4>
         <h4>
-          Language:
-          <span>{biggerData.language}</span>
+          Language :<span> {biggerData.language}</span>
         </h4>
         <h4>
           Publisher:
-          <span>{biggerData.publisher}</span>
+          <span> {biggerData.publisher}</span>
         </h4>
 
         <h4>
-          Author:
-          <span>{biggerData.author}</span>
+          Author :<span> {biggerData.author}</span>
         </h4>
 
         <h4>
-          Published Date:
-          <span>{biggerData.published}</span>
+          Published Date :<span> {biggerData.published}</span>
         </h4>
         {user && (
-          <>
+          <div className="features">
             <select
               name="status"
               onClick={(e) => {
-                addBookStatus(biggerData.id, e.target.value).then((response) =>
-                  console.log("added hai")
-                );
+                addBookStatus(biggerData.id, e.target.value);
               }}
             >
               {(!userInfo.bookStatus || !isPresent("bookStatus").bo) && (
                 <>
-                  {console.log("before")}
-
                   {options.status.map((s, index) => {
                     if (s === "none") {
                       return (
@@ -162,7 +149,6 @@ const OneBook = () => {
                 <>
                   {options.status.map((s, index) => {
                     const where = isPresent("bookStatus").position;
-                    // console.log(where);
                     if (s === userInfo.bookStatus[where].status)
                       return (
                         <option key={index} selected value={s}>
@@ -181,9 +167,7 @@ const OneBook = () => {
             </select>
             <button
               onClick={() => {
-                addToLibrary(biggerData.id)
-                  .catch((err) => console.log(err))
-                  .finally(console.log("Library data updated"));
+                addToLibrary(biggerData.id);
               }}
             >
               Add to library +
@@ -232,7 +216,7 @@ const OneBook = () => {
                 </>
               )}
             </select>
-          </>
+          </div>
         )}
         <CommentSection id={biggerData.id} />
         {user && (
@@ -241,12 +225,9 @@ const OneBook = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                console.log(comment);
-                addComment(biggerData.id, comment)
-                  .then(() => console.log("added"))
-                  .finally(() => {
-                    setComment("");
-                  });
+                addComment(biggerData.id, comment).finally(() => {
+                  setComment("");
+                });
               }}
             >
               <textarea

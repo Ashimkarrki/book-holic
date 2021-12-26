@@ -27,10 +27,8 @@ const LogIn = () => {
         onSubmit={(e) => {
           e.preventDefault();
           logIn(data.email, data.password)
-            .then((response) => console.log(response))
             .catch((err) => {
               isInvalid = true;
-              console.log(err);
               toast.warn("invalid password or email", {
                 position: toast.POSITION.BOTTOM_LEFT,
                 theme: "dark",

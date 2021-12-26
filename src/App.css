@@ -89,6 +89,16 @@
 .home form h4 {
   font-weight: 200;
 }
+.up {
+  font-family: "Roboto", sans-serif;
+}
+textarea {
+  padding: 0.5em;
+  width: 100%;
+}
+textarea:focus {
+  outline: none;
+}
 .booklist {
   /* background-color: rgba(184, 170, 170, 0.836); */
   /* background-color: rgba(184, 170, 170, 0.836); */
@@ -115,13 +125,53 @@
 
   /* display: ; */
 }
-.individual {
+.individual h5 {
+  color: #673d4d;
+}
+.individual h6 {
+  color: #673d4d;
+}
+.reviewsection form {
   display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 1em;
+}
+.reviewsection form button {
+  width: 10em;
+}
+select,
+.up button {
+  padding: 0.2em;
+  text-transform: capitalize;
+}
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+.individual {
+  font-family: "Roboto", sans-serif;
+  background-color: #05ce9270;
+  color: #110d0e;
+  box-shadow: rgba(0, 0, 0, 0.507) 0.1em 0.1em 0.27em;
+
+  border-radius: 1em;
+  padding: 1.5em;
+  display: flex;
+}
+.individual img {
+  border-radius: 1em;
+  box-shadow: rgba(0, 0, 0, 0.507) 0.1em 0.1em 0.27em;
 }
 .individual > div {
   margin-top: auto;
   margin-bottom: auto;
   margin-left: 2em;
+}
+.onebook {
+  width: 60%;
 }
 .up {
   padding: 2em 15em 0 15em;
@@ -129,6 +179,11 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+}
+@media (max-width: 1134px) {
+  .up {
+    padding: 2em 5em 0 5em;
+  }
 }
 .pictureRwname {
   display: flex;
@@ -155,7 +210,8 @@
 }
 
 span {
-  color: rgb(179, 98, 98);
+  /* color: rgb(179, 98, 98); */
+  color: #110d0e;
 }
 .loadingKoMathi {
   display: flex;
