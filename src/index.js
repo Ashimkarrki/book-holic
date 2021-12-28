@@ -3,14 +3,14 @@ import ReactDOM from "react-dom";
 import { AppProvider } from "./reducer and context/context";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <AppProvider>
-      <BrowserRouter>
+      <HashRouter>
         <App />
-      </BrowserRouter>
+      </HashRouter>
     </AppProvider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -120,7 +120,8 @@ textarea:focus {
   width: 40%;
   flex-direction: column;
   /* padding: 3em; */
-  /* align-items: center; */
+  align-items: center;
+  justify-content: center;
   gap: 2em;
 
   /* display: ; */
@@ -156,7 +157,7 @@ select,
   background-color: #05ce9270;
   color: #110d0e;
   box-shadow: rgba(0, 0, 0, 0.507) 0.1em 0.1em 0.27em;
-
+  width: 30em;
   border-radius: 1em;
   padding: 1.5em;
   display: flex;
@@ -169,6 +170,11 @@ select,
   margin-top: auto;
   margin-bottom: auto;
   margin-left: 2em;
+}
+@media (max-width: 710px) {
+  .individual {
+    width: 20em;
+  }
 }
 .onebook {
   width: 60%;
