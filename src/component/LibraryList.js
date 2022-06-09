@@ -28,7 +28,7 @@ const LibraryList = ({ library, whatIsInThere, reqData }) => {
     const responses = await Promise.all(
       ids.map((s) => {
         return fetch(
-          `https://www.googleapis.com/books/v1/volumes/${s}?key=${process.env.REACT_APP_BOOK_API}`
+          `https://www.googleapis.com/books/v1/volumes/${s}?key=${"AIzaSyBGiwbvE0SI4x9H2X2DJMGL2sjQMn4M9NU"}`
         );
       })
     );

@@ -19,7 +19,8 @@ import {
 
 import reducer from "./reducer";
 const url = "https://www.googleapis.com/books/v1/volumes?q=";
-const apiKey = process.env.REACT_APP_BOOK_API;
+const apiKey = "AIzaSyBGiwbvE0SI4x9H2X2DJMGL2sjQMn4M9NU";
+console.log(process.env.REACT_APP_BOOK_API);
 const AppContext = React.createContext();
 const initialState = {
   bookName: "",

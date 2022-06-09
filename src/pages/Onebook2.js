@@ -50,7 +50,7 @@ const OneBook2 = () => {
 
   const fetchOne = async () => {
     const response = await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${process.env.REACT_APP_BOOK_API}`
+      `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${"AIzaSyBGiwbvE0SI4x9H2X2DJMGL2sjQMn4M9NU"}`
     );
 
     const convert = await response.json();
