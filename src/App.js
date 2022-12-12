@@ -16,6 +16,7 @@ import Loading from "./component/Loading";
 import { ToastContainer } from "react-toastify";
 
 function App() {
+
   const { openSidebar, userLoading } = useGlobalContext();
   if (userLoading) {
     return (

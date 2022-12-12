@@ -2,7 +2,7 @@ import React from "react";
 import { useGlobalContext } from "../reducer and context/context";
 import { Link, useLocation } from "react-router-dom";
 const Nav = () => {
-  const { openSidebar, toggleSidebar, user } = useGlobalContext();
+  const {  toggleSidebar, user } = useGlobalContext();
   const x = useLocation();
   return (
     <div className="nav">

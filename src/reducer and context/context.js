@@ -19,8 +19,7 @@ import {
 
 import reducer from "./reducer";
 const url = "https://www.googleapis.com/books/v1/volumes?q=";
-const apiKey = "AIzaSyBGiwbvE0SI4x9H2X2DJMGL2sjQMn4M9NU";
-console.log(process.env.REACT_APP_BOOK_API);
+const apiKey = process.env.REACT_APP_BOOK_API;
 const AppContext = React.createContext();
 const initialState = {
   bookName: "",
@@ -51,13 +50,13 @@ const AppProvider = ({ children }) => {
       setUserInfo({
         ...userInfo,
         library: userInfo.library.filter((s) => {
-          return s != x;
+          return s !==x;
         }),
       });
       return setDoc(doc(colRef, user.uid), {
         ...userInfo,
         library: userInfo.library.filter((s) => {
-          return s != x;
+          return s !== x;
         }),
       });
     }
@@ -71,7 +70,7 @@ const AppProvider = ({ children }) => {
   const addRating = (bookId, rating) => {
     const colRef = collection(db, "user");
     const temp = userInfo.rated.filter((s) => {
-      return s.bookId != bookId;
+      return s.bookId !== bookId;
     });
     if (rating === "none") {
       setUserInfo({
@@ -109,7 +108,7 @@ const AppProvider = ({ children }) => {
     const colRef = collection(db, "user");
 
     const temp = userInfo.bookStatus.filter((s) => {
-      return s.bookId != bookId;
+      return s.bookId !== bookId;
     });
     if (status === "none") {
       setUserInfo({

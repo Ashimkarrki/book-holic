@@ -1,16 +1,14 @@
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "SET-BOOK-NAME":
       return { ...state, bookName: action.payload };
-
-      break;
     case "TOGGLE-SIDEBAR":
       return { ...state, openSidebar: !state.openSidebar };
 
-      break;
     case "SET-CURRENT-USER":
       return { ...state, currentUser: action.payload };
-      break;
+
 
     case "INSTALL-SEARCH-BOOKS":
       const temp2 = action.payload.items;
@@ -40,6 +38,8 @@ const reducer = (state, action) => {
           books: newHai,
         },
       };
+      default:
+        return state;
   }
 };
 export default reducer;

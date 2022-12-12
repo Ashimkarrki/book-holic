@@ -1,9 +1,8 @@
 import React from "react";
 import { useGlobalContext } from "../reducer and context/context";
 import BookList from "../component/BookList";
-import Loading from "../component/Loading";
 const Home = () => {
-  const { setBookName, bookName, searchLoading } = useGlobalContext();
+  const { setBookName } = useGlobalContext();
   const [name, setName] = React.useState("");
   // if
   return (
